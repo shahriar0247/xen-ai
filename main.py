@@ -1,10 +1,70 @@
-import getvoice
+from getvoice import getvoice
 import say
 import gettingtime
+import os
+
+said = getvoice.getvoice()
+#said = input()
 
 
-#said = getvoice()
-said = input()
+
+if 'open' in said or "start" in said:
+    
+    if "in" in said:
+        said1 = said.replace("open", "")
+        if "and" in said1:
+            said1 = said1.split("and")
+        
+            
+        else:
+            said1 = [said1, "empty"]
+        i = 0
+        while i < len(said1):
+            if "chrome" in said1[i]:
+                said1[i] = said1[i].replace("chrome", "")
+                said1[i] = said1[i].replace("in", "")
+                said1[i] = said1[i].replace("browser", "")
+                said1[i] = said1[i].replace(" ", "")
+                said1[i] = "www." + said1[i] + ".com"
+                said1[i] = "start chrome " + said1[i]
+                os.system(said1[i])
+                
+            if "firefox" in said1[i]:
+                said1[i] = said1[i].replace("firefox", "")
+                said1[i] = said1[i].replace("in", "")
+                said1[i] = said1[i].replace("browser", "")
+                said1[i] = said1[i].replace(" ", "")
+                said1[i] = "www." + said1[i] + ".com"
+                said1[i] = "start firefox " + said1[i]
+                os.system(said1[i])
+            i = i + 1
+    else:
+        if "computer" in said or "pc" in said:
+            os.system("explorer ::{20D04FE0-3AEA-1069-A2D8-08002B30309D}")
+        if "document" in said:
+            os.system("explorer shell:document")
+        if "download" in said:
+            os.system("explorer shell:downloads")
+        if "desktop" in said:
+            os.system("explorer shell:Desktop")
+        if "music" in said:
+            os.system("explorer shell:Music")
+        if "video" in said:
+            os.system("explorer shell:Video")
+        if "chrome" in said:
+            os.system("start chrome")
+        if "firefox" in said:
+            os.system("start firefox")
+        if "control panal" in said:
+            os.system("control")
+            
+    say.say("Opening " + said.replace("open ",""))
+
+    
+    
+
+
+
 
 if said == 'who are you':
     say.say("Hello I am zen and i am created by ahmed shah rear")
