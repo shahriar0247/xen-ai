@@ -3,7 +3,7 @@
 <h3> Features </h3>
 <ol>
 <li>Open
-<ul>
+<ul><stroke>
 <li>This PC</li>
 <li>Documents</li>
 <li>Videos</li>
@@ -12,7 +12,8 @@
 <li>Downloads</li>
 <li>Chrome</li>
 <li>Firefox</li>
-
+</stroke>
+  any program in start menu except for windows 10 applications
 </ul>
 </li>
 <li>Open "stackoverflow" in chrome (to open stackoverflow.com in chrome/firefox)</li>
