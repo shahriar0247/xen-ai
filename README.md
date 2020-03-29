@@ -2,19 +2,7 @@
 
 <h3> Features </h3>
 <ol>
-<li>Open
-<ul><stroke>
-<li>This PC</li>
-<li>Documents</li>
-<li>Videos</li>
-<li>Music</li>
-<li>Desktop</li>
-<li>Downloads</li>
-<li>Chrome</li>
-<li>Firefox</li>
-</stroke>
-  any program in start menu except for windows 10 applications
-</ul>
+<li>Open any program in start menu except for windows 10 applications
 </li>
 <li>Open "stackoverflow" in chrome (to open stackoverflow.com in chrome/firefox)</li>
 <li>Supports more then one command at a time</li>
