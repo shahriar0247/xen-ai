@@ -16,6 +16,7 @@
 <li>Need python modules <ul> <li>pyttsx3</li>
 <li>pywin32</li>
 <li>SpeechRecognition</li>
+  <li>PyAudio</li>
 </ul>
 <p>Run requirements.bat file to automatically install modules with pip</p>
 </ol>
