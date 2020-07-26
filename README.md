@@ -24,8 +24,6 @@
 <h3> Installation </h3>
 
 <ol>
-<li>Run the flask_server.py file with "python flask_server.py" or "python3.6 flask_server.py"</li>
+  <li> Run the "main.py" for continues listening with no gui <li>
+<li>Run the flask_server.py and visit the url to start and stop listening with the press of a button</li>
 </ol>
-
-<h3> Note </h3>
-<p> If you just want to run the python file without flask/gui (webserver), add "keep_listening()" function at the bottom of "main.py" file and run the "main.py" file </p>
