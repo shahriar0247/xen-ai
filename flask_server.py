@@ -19,48 +19,54 @@ if getattr(sys, 'frozen', False):
 else: 
 
     app = Flask(__name__)
-
-
-
-@app.route("/") 
-def hello(): 
-
-    return render_template("main.html", listening="false")
-
-@app.route('/listen', methods = ['POST'])
-def listen2():
-    will_listen = request.form['listen_form_text']
-    if (will_listen == "Start listening"):
-        print("Lol")
-        with open("listening", "w") as a:
-            a.write("true")
-        listening = "true"
-    else:
-        print("22")
-        with open("listening", "w") as a:
-            a.write("false")
-        listening = "false"
-    print(listening)
-    return render_template("main.html", listening=listening)
-
-
+with open("threadon", "w") as a:
+    a.write("false")
         
 def listen_properly():
     while True:
-        time.sleep(1)
+        time.sleep(1/10)
         with open("listening", "r") as a:
             if a.read() == "true":
-                main.listen()
+                main.start_listening()
             else:
                 pass
 
-  
-multiprocessing.Process(target=listen_properly).start()
 
-if __name__ == "__main__":
-    app.debug = True
+@app.route('/', methods = ['POST', "GET"])
+def flasking():
+
+        threadon = open("threadon", "r")
+        if threadon.read() == "false":
+            threading.Thread(target=listen_properly).start()
+            threadon.close()
+            threadon = open("threadon", "w+")
+            threadon.writelines("true")
+            threadon.close()
+            print("starting thread")
+            return render_template("main.html", listening="false")
+
+        will_listen = request.form['listen_form_text']
+        if (will_listen == "Start listening"):
+            print("Lol")
+            with open("listening", "w") as a:
+                a.write("true")
+            listening = "true"
+        else:
+            print("22")
+            with open("listening", "w") as a:
+                a.write("false")
+            listening = "false"
+        print(listening)
+        return render_template("main.html", listening=listening)
+
+
+
+def start_flask_server():
     app.run(host='127.0.0.1', port=5000, debug=True)
 
 
 
-# threading.Thread(target=main.listen).start()
+start_flask_server()
+
+
+

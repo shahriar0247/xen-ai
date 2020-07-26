@@ -125,10 +125,11 @@ def listen():
     action = threading.Thread(target=do, args=[said])
     action.start()
 
-
-
 def start_listening():
-    listen()
+    try:
+        listen()
+    except UnknownValueError:
+        print("Unknown Value Error")
 
 def keep_listening():
     while True:
