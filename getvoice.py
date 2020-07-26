@@ -10,4 +10,5 @@ class getvoice:
 
         said = r.recognize_google(audio)
         said = said.lower()
+        print(said)
         return said

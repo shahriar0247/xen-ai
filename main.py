@@ -6,10 +6,13 @@ from urllib.parse import quote
 import subprocess
 import getpass
 import open_any_program
+from speech_recognition import UnknownValueError
+import threading
+import multiprocessing
+import terminate_program
 
 
 def do(said):
-    
     if 'open' in said:
 
         say.say("Okay")
@@ -85,7 +88,6 @@ def do(said):
     if 'time' in said :
         hours, minutes = gettingtime.time()
         say.say("The time is " + hours + " " + minutes)
-
     if 'date' in said:
         date, month = gettingtime.date()
         say.say("the date is " + date + " of " + month)
@@ -114,16 +116,18 @@ def do(said):
             if search_for.startswith("for%20"):
                 search_for = search_for.replace("for%20", "", 1)
             os.system("start https://search.yahoo.com/search?p=" + search_for)
-   
+    if said.startswith("terminate"):
+        terminate_program.terminate(said.replace("terminate",""))
+
 
 def listen():
     said = getvoice.getvoice()
-    do(said)
-    
-        
+    action = threading.Thread(target=do, args=[said])
+    action.start()
+
+
 
 def start_listening():
-    
     listen()
 
 def keep_listening():
@@ -131,10 +135,13 @@ def keep_listening():
         try:
             listen()
         except KeyboardInterrupt:
+            print("Keyboard Interrupt")
             break
-        
+        except UnknownValueError:
+            print("Unknown Value Error")
+
      
         
-start_listening()
+keep_listening()
 
 

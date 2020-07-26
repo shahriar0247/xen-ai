@@ -128,7 +128,7 @@ def getting_specified_program(requested, program_list):
             open_program(program[0],program[1]) 
             return
     
-    print("failed")
+    say.say("failed")
 
 def get_programs_to_db():
     create_db()
