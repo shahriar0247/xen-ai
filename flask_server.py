@@ -65,8 +65,8 @@ def start_flask_server():
     app.run(host='127.0.0.1', port=5000, debug=True)
 
 
-
-start_flask_server()
+if __name__ == "__main__":
+    start_flask_server()
 
 
 
