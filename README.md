@@ -2,6 +2,7 @@
 
 <h3> Features </h3>
 <ol>
+  <li> A web gui to stop and start listening (I will be creating the gui as a desktop app with electron)</li>
 <li>Open any program in start menu except for windows 10 applications
 </li>
 <li>Open "stackoverflow" in chrome (to open stackoverflow.com in chrome/firefox)</li>
