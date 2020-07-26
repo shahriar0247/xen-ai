@@ -24,6 +24,6 @@
 <h3> Installation </h3>
 
 <ol>
-  <li> Run the "main.py" for continues listening with no gui <li>
+  <li> Run the "main.py" for continues listening with no gui </li>
 <li>Run the flask_server.py and visit the url to start and stop listening with the press of a button</li>
 </ol>
