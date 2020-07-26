@@ -141,6 +141,9 @@ def keep_listening():
         except UnknownValueError:
             print("Unknown Value Error")
 
+if __name__ == "__main__":
+    keep_listening()
+
      
 
 
