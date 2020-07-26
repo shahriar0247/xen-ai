@@ -17,11 +17,15 @@
 <li>pywin32</li>
 <li>SpeechRecognition</li>
   <li>PyAudio</li>
+  <li>Flask</li>
 </ul>
 <p>Run requirements.bat file to automatically install modules with pip</p>
 </ol>
 <h3> Installation </h3>
 
 <ol>
-<li>Nothing required just run the main.py file with "python main.py" or "python3.6 main.py"</li>
+<li>Run the flask_server.py file with "python flask_server.py" or "python3.6 flask_server.py"</li>
 </ol>
+
+<h3> Note </h3>
+<p> If you just want to run the python file without flask/gui (webserver), add "keep_listening()" function at the bottom of "main.py" file and run the "main.py" file </p>
