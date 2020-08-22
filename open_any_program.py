@@ -88,7 +88,7 @@ def get_requested_program_loc(program_name):
 
 def specify_program(programs_with_same_name):
     if len(programs_with_same_name) == 0:
-        say.say("cant find the program")
+        say.say("I cant find the application, Do you want to reset the program database")
         return 0,0
     elif len(programs_with_same_name) == 1:
         open_program(programs_with_same_name[0][0],programs_with_same_name[0][1])
