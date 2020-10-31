@@ -77,7 +77,13 @@ def list_user_programs_dir():
 
 def get_data_in_array():
     global ALL_PROGRAM
-    ALL_PROGRAM = cursor.execute("SELECT * FROM program_list").fetchall()
+    try:
+        ALL_PROGRAM = cursor.execute("SELECT * FROM program_list").fetchall()
+    except sqlite3.OperationalError:
+        say.say("Program database is empty")
+        get_programs_to_db()
+        ALL_PROGRAM = cursor.execute("SELECT * FROM program_list").fetchall()
+    
    
 def get_requested_program_loc(program_name):
     programs_with_same_name = []
@@ -88,7 +94,7 @@ def get_requested_program_loc(program_name):
 
 def specify_program(programs_with_same_name):
     if len(programs_with_same_name) == 0:
-        say.say("I cant find the application, Do you want to reset the program database")
+        say.say("I cant find the application")
         return 0,0
     elif len(programs_with_same_name) == 1:
         open_program(programs_with_same_name[0][0],programs_with_same_name[0][1])
@@ -102,7 +108,7 @@ def specify_program(programs_with_same_name):
             a = a+1
             programs_to_open = programs_to_open + ("number " + str(a)+ " " + b[0].replace(".lnk","") + ", ")
 
-        say.say(programs_to_open)
+        say.say_process(programs_to_open)
         program_requested = getvoice.getvoice()
 
         if program_requested.startswith("open "):
@@ -131,11 +137,14 @@ def getting_specified_program(requested, program_list):
     say.say("failed")
 
 def get_programs_to_db():
+    print("lol")
+    say.say("adding programs to database")
     create_db()
     create_table()
     list_main_programs_dir()
     list_user_programs_dir()
     conn.close()
+    say.say("programs added to database")
 
 
 def start_program(program_name):

@@ -18,12 +18,5 @@ def date():
     date = mydate.strftime('%d')
     month = mydate.strftime("%B")
     date = str(date)
-    if date == "1":
-        date = "first"
-    elif date == "2":
-        date = "second"
-    elif date == "1":
-        date = "third"
-    else:
-        date = date + "th"
+
     return date, month

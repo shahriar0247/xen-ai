@@ -7,13 +7,20 @@ import os
 import time
 from playsound import playsound
 from urllib.request import urlopen, URLError
+import multiprocessing
+import shutil
+import threading
+
 
 def say(text):
+    # say_process(text)
+    multiprocessing.Process(target=say_process, args=[text]).start()
+        
+def say_process(text):
     if internet_on():
         say_online(text)
     else:
         say_offline(text)
-        
 
 def say_online(text):
     gtts_object = gTTS(text=text)
@@ -34,6 +41,8 @@ def say_offline(text):
 def set_temp_dir():
     try:
         if os.path.isdir("temp"):
+            shutil.rmtree('temp')
+            os.mkdir("temp")
             return True
         else:
             os.mkdir("temp")
