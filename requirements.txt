@@ -4,3 +4,4 @@ SpeechRecognition
 pyaudio
 flask
 gTTS
+playsound
