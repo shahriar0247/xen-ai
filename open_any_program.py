@@ -3,7 +3,6 @@ import sqlite3
 import getpass
 import subprocess
 import say
-from getvoice import getvoice
 
 ALL_PROGRAM = []
 conn = None
