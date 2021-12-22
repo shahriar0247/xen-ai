@@ -11,6 +11,12 @@ import multiprocessing
 import shutil
 import threading
 import pyttsx3
+import subprocess
+import soundfile as sf
+import pyrubberband as pyrb
+import sys
+from pydub import AudioSegment
+
 
 
 def say(text):
@@ -29,9 +35,13 @@ def say_online(text):
     print(21)
     gtts_object = gTTS(text=text)
     set_temp_dir()
-    filename = "temp/" + str(time.time()) + ".mp3"
+    filename = "temp/output2.mp3"
     print(22)
-    gtts_object.save(filename) 
+    gtts_object.save(filename)
+    os.system("ffmpeg -i "+filename+" "+filename+".wav")
+
+    filename = filename + ".wav"
+    filename = change_speed(filename)
     print(23) 
     playsound(filename) 
     print(24)
@@ -66,6 +76,15 @@ def set_temp_dir():
         print(e)
         return False
 
+def change_speed(filename):
+    y, sr = sf.read(filename)
+    filename = filename + "3"
+    # Play back at 1.5X speed
+    y_stretch = pyrb.time_stretch(y, sr, 1.5)
+    # Play back two 1.5x tones
+    y_shift = pyrb.pitch_shift(y, sr, 1.5)
+    sf.write(filename, y_stretch, sr, format='wav')
+    return filename
 
 def internet_on():
     try:
@@ -73,3 +92,6 @@ def internet_on():
         return True
     except URLError as err: 
         return False
+
+
+

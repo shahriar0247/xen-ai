@@ -89,7 +89,7 @@ def listening_background():
     m = sr.Microphone()
     print(5)
     with m as source:
-        r.adjust_for_ambient_noise(source, duration=2)  # we only need to calibrate once, before we start listening
+        r.adjust_for_ambient_noise(source)  # we only need to calibrate once, before we start listening
     print(6)
     stop_listening = r.listen_in_background(m, callback2)
     print(7)
