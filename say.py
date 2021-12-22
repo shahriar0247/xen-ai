@@ -53,7 +53,7 @@ def say_online(text):
     os.system("ffmpeg -i "+filename+" "+filename+".wav")
     filename = filename + ".wav"
     print(filename)
-    sped_up_sound = AudioSegment.from_file(filename).speedup(1.3, 150, 25)
+    sped_up_sound = AudioSegment.from_file(filename).speedup(1.5, 150, 25)
     print(23) 
     play(sped_up_sound)
     print(24)
