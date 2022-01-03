@@ -3,10 +3,14 @@ import sqlite3
 import getpass
 import subprocess
 import say
+import getvoice
+from debug import debug
+import inflect
 
 ALL_PROGRAM = []
 conn = None
 cursor = None
+p = inflect.engine()
 
 def create_db():
     global conn
@@ -122,7 +126,11 @@ def open_program(program_name,program_loc):
     say.say("opening " + program_name.replace(".lnk", ""))
     return "sucess"
 
+numbers = ["1","2","3","4","5","6","7","8","9","0"]
+
 def getting_specified_program(requested, program_list):
+    for a in requested:
+        
     for program in program_list:
         if requested == program[0].replace(".lnk",""):
             open_program(program[0],program[1])
@@ -136,7 +144,7 @@ def getting_specified_program(requested, program_list):
     say.say("failed")
 
 def get_programs_to_db():
-    print("lol")
+    debug("lol")
     say.say("adding programs to database")
     create_db()
     create_table()
