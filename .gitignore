@@ -2,3 +2,5 @@
 
 mlruns
 haystack
+*.scorer
+*.pbmm

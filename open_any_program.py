@@ -129,7 +129,7 @@ def open_program(program_name,program_loc):
 numbers = ["1","2","3","4","5","6","7","8","9","0"]
 
 def getting_specified_program(requested, program_list):
-    for a in requested:
+    
         
     for program in program_list:
         if requested == program[0].replace(".lnk",""):

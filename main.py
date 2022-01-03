@@ -9,7 +9,7 @@ from speech_recognition import UnknownValueError
 import threading
 import multiprocessing
 import terminate_program
-from talkings import talkings
+# from talkings import talkings
 import open_any_program
 from search import search
 from program_functions import program_functions
@@ -29,7 +29,7 @@ def do(said):
     debug(13)
     program_functions(said)
     debug(14)
-    talkings(said)
+
 
 
 def listen_for_flask():
