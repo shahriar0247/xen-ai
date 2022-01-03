@@ -1,10 +1,10 @@
 import say
 import gettingtime
 from charlie import charlie3
-
+from debug import debug
 
 def talkings(said):
-    print(15)
+    debug(15)
     if 'time' in said :
         hours, minutes = gettingtime.time()
         say.say("The time is " + hours + " " + minutes)
@@ -19,16 +19,16 @@ def talkings(said):
     else:
         charlie(said)
 
-questions_starters = ['who', "what", "when", "why"]
+questions_starters = ['who', "what", "when", "why", "how"]
 
 def charlie(said):
-    print(16)
+    debug(16)
 
     try:
         if said.startswith("learn"):
             charlie3.train(said.replace("learn", ""))
         elif said.split(" ")[0] in questions_starters:
-            print(17)
+            debug(17)
             say.say(charlie3.ask(said))
     except:
         pass

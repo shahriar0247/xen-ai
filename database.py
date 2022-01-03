@@ -9,8 +9,8 @@ conn.close()
 
 
 def start():
+    conn = sqlite3.connect("commands.db")
     c = conn.cursor()
-    conn.commit()
     return conn, c
 
 def save(said):

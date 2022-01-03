@@ -29,7 +29,7 @@ def ask(question):
     prediction = pipe.run(
         query=question, params={"Retriever": {"top_k": 10}, "Reader": {"top_k": 5}}
     )
-    return (prediction["answers"][1].answer)
+    print_answers(prediction)
 
 
 

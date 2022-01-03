@@ -17,15 +17,18 @@ from open_program import open_cmd
 import speech_recognition as sr
 import database
 import gettingtime
+from debug import debug
+
+stop_listening = None
 
 def do(said):
-    print(11)
+    debug(11)
     open_cmd(said)
-    print(12)
+    debug(12)
     search(said)
-    print(13)
+    debug(13)
     program_functions(said)
-    print(14)
+    debug(14)
     talkings(said)
 
 
@@ -42,26 +45,36 @@ def listen_for_flask():
             action = threading.Thread(target=do, args=[said])
             action.start()
     except UnknownValueError:
-        print("Unknown Value Error")
+        debug("Unknown Value Error")
     
 def listen():
-    pass
+    print("listening")
+    r = sr.Recognizer() 
+    with sr.Microphone() as source2:
+
+        r.adjust_for_ambient_noise(source2, duration=0.2)
+            
+
+        audio2 = r.listen(source2)
+    callback2(r, audio2)
+
+
 
 def start_listening():
     try:
         listen()
     except UnknownValueError:
-        print("Unknown Value Error")
+        debug("Unknown Value Error")
 
 def keep_listening():
     while True:
         try:
             listen()
         except KeyboardInterrupt:
-            print("Keyboard Interrupt")
+            debug("Keyboard Interrupt")
             break
         except UnknownValueError:
-            print("Unknown Value Error")
+            debug("Unknown Value Error")
 
 def keep_inputing():
     while True:
@@ -69,51 +82,53 @@ def keep_inputing():
             said = input("Write something: ")
             action = threading.Thread(target=do, args=[said]).start()
         except KeyboardInterrupt:
-            print(KeyboardInterrupt)
+            debug(KeyboardInterrupt)
             break
 
 
 def start():
-    print(2)
+    debug(2)
     with open("opening", "w") as opening:
         opening.write("false")
-    print(3)
-    listening_background()
+    debug(3)
+    keep_listening()
 
 
 
 
 def listening_background():
-    print(4)
+    debug(4)
     r = sr.Recognizer()
     m = sr.Microphone()
-    print(5)
+    debug(5)
     with m as source:
         r.adjust_for_ambient_noise(source)  # we only need to calibrate once, before we start listening
-    print(6)
+    debug(6)
+    global stop_listening
     stop_listening = r.listen_in_background(m, callback2)
-    print(7)
+    debug(7)
     say.say("Hello sir")
 
 
 def callback2(r, audio):
-    print(8)
+    debug(8)
     try:
         said = r.recognize_google(audio)
-        print(9)
         print(said)
+        debug(9)
+        debug(said)
         said = said.lower()
-        print(said)
+        debug(said)
         threading.Thread(target=do, args=[said]).start()
-        print(10)
+        debug(10)
         threading.Thread(target=database.save, args=[said]).start()
     except UnknownValueError:
         pass
 
 if __name__ == "__main__":
-    print(1)
+    debug(1)
     start()
-    print("done")
+    debug("done")
     time.sleep(1000)
 
 

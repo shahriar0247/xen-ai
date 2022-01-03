@@ -29,5 +29,5 @@ for question in questions:
   short_end = tf.argmax(outputs[1][0][1:]) + 1
   answer_tokens = tokens[short_start: short_end + 1]
   answer = tokenizer.convert_tokens_to_string(answer_tokens)
-  print(f'Question: {question}')
-  print(f'Answer: {answer}')
+  debug(f'Question: {question}')
+  debug(f'Answer: {answer}')
