@@ -4,3 +4,4 @@ mlruns
 haystack
 *.scorer
 *.pbmm
+temp
