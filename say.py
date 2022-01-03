@@ -17,7 +17,7 @@ import pyrubberband as pyrb
 import sys
 from pydub import AudioSegment
 from pydub.playback import play
-from debug import debug
+import subprocess
 
 def speed_change(sound, speed=1.0):
     # Manually override the frame_rate. This tells the computer how many
@@ -33,32 +33,32 @@ def speed_change(sound, speed=1.0):
 
 
 def say(text):
-    debug(19)
+    
     print(text)
     say_process(text)
     #multiprocessing.Process(target=say_process, args=[text]).start()
         
 def say_process(text):
     if internet_on():
-        debug(20)
+        
         say_online(text)
     else:
         say_offline(text)
 
 def say_online(text):
-    debug(21)
+    
     gtts_object = gTTS(text=text)
     set_temp_dir()
     filename = "temp/output2.mp3"
-    debug(22)
+    
     gtts_object.save(filename)
-    os.system("ffmpeg -i "+filename+" "+filename+".wav")
+    lol = subprocess.Popen("ffmpeg -i "+filename+" "+filename+".wav", shell=True, stdout=subprocess.PIPE)
     filename = filename + ".wav"
-    debug(filename)
+    
     sped_up_sound = AudioSegment.from_file(filename).speedup(1.5, 150, 25)
-    debug(23) 
+    
     play(sped_up_sound)
-    debug(24)
+    
 
 
 
@@ -87,7 +87,7 @@ def set_temp_dir():
             return True
         return False
     except Exception as e:
-        debug(e)
+        
         return False
 
 def change_speed(filename):

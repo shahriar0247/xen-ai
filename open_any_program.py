@@ -4,7 +4,6 @@ import getpass
 import subprocess
 import say
 import getvoice
-from debug import debug
 import inflect
 
 ALL_PROGRAM = []
@@ -144,7 +143,7 @@ def getting_specified_program(requested, program_list):
     say.say("failed")
 
 def get_programs_to_db():
-    debug("lol")
+    
     say.say("adding programs to database")
     create_db()
     create_table()

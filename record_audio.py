@@ -12,7 +12,7 @@ RATE = 44100
 
 def is_silent(snd_data):
     "Returns 'True' if below the 'silent' threshold"
-    debug(snd_data)
+    
     return max(snd_data) < THRESHOLD
 
 def normalize(snd_data):
@@ -117,7 +117,7 @@ def record_to_file(path):
     wf.close()
 
 if __name__ == '__main__':
-    debug("please speak a word into the microphone")
+    
     record_to_file('demo.wav')
     playsound("demo.wav")
-    debug("done - result written to demo.wav")
+    

@@ -24,7 +24,7 @@ exe = EXE(pyz,
           a.datas,
           [],
           name='main',
-          debug=False,
+          
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,

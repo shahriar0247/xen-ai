@@ -1,2 +1,2 @@
 def debug(text):
-        pass
+        print(text)

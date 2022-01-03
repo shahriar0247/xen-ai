@@ -12,8 +12,8 @@ if getattr(sys, 'frozen', False):
     template_folder = os.path.join(sys._MEIPASS, 'templates')
     static_folder = os.path.join(sys._MEIPASS, 'static')
 
-    debug(template_folder)
-    debug(static_folder)
+    
+    
 
     app = Flask(__name__, template_folder=template_folder,
                 static_folder=static_folder)
@@ -50,26 +50,26 @@ def flasking():
             threadon = open("threadon", "w+")
             threadon.writelines("true")
             threadon.close()
-            debug("starting thread")
+            
             return render_template("main.html", listening="false")
     else:
         will_listen = request.form['listen_form_text']
         if (will_listen == "Start listening"):
-            debug("Lol")
+            
             with open("listening", "w") as a:
                 a.write("true")
             listening = "true"
         else:
-            debug("22")
+            
             with open("listening", "w") as a:
                 a.write("false")
             listening = "false"
-        debug(listening)
+        
         return render_template("main.html", listening=listening)
 
 
 def start_flask_server():
-    app.run(host='127.0.0.1', port=5000, debug=True)
+    app.run(host='127.0.0.1', port=5000, 
 
 
 if __name__ == "__main__":

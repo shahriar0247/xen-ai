@@ -8,6 +8,9 @@ import wave
 import webrtcvad
 from halo import Halo
 from scipy import signal
+import speech_recognition as sr
+
+from action import do
 
 logging.basicConfig(level=20)
 
@@ -128,7 +131,7 @@ class VADAudio(Audio):
         triggered = False
 
         for frame in frames:
-            if len(frame) < 640:
+            if len(frame) < 1280:
                 return
 
             is_speech = self.vad.is_speech(frame, self.sample_rate)
@@ -151,30 +154,40 @@ class VADAudio(Audio):
                     yield None
                     ring_buffer.clear()
 
-def main():
-
+def background_listen_2():
 
     # Start audio with VAD
     vad_audio = VADAudio(
                          device=None,
-                         input_rate=192000,)
-    print("Listening (ctrl-C to exit)...")
+                         input_rate=32000,)
+    
     frames = vad_audio.vad_collector()
     spinner = None
     wav_data = bytearray()
     for frame in frames:
         if frame is not None:
-            print(len(frame))
-            logging.debug("streaming frame")
             if "temp": wav_data.extend(frame)
         else:
             
             if spinner: spinner.stop()
-            logging.debug("end utterence")
             filename = os.path.join("temp", datetime.now().strftime("savewav_%Y-%m-%d_%H-%M-%S_%f.wav"))
             vad_audio.write_wav(filename, wav_data)
-
+            threading.Thread(target=audio_to_text, args=[filename]).start()
             wav_data = bytearray()
 
-if __name__ == '__main__':
-    main()
+r = sr.Recognizer()
+with sr.Microphone() as source:
+    r.adjust_for_ambient_noise(source)
+
+def audio_to_text(filename):
+    
+    try:
+            with sr.AudioFile(filename) as source:
+                # listen for the data (load audio to memory)
+                audio_data = r.record(source)
+                # recognize (convert from speech to text)
+                text = r.recognize_google(audio_data)
+                do(text)
+    except sr.UnknownValueError:
+        pass
+

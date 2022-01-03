@@ -10,6 +10,6 @@ def train(new_context):
 
 def ask(question):
         result = question_answering(question=question, context=context)
-        debug(18)
+        
         return result['answer']
 
