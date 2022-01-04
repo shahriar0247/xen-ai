@@ -1,4 +1,4 @@
-import output.text_to_speech.say as say
+import outputs.text_to_speech.say as say
 import os
 import processing.Direct_Logic.open_any_program as open_any_program
 import time

@@ -2,7 +2,9 @@ import win32com.client as wincl
 import pythoncom
 import time
 from pywintypes import com_error
-from gtts import gTTS 
+from gtts import gTTS
+
+from outputs.text_to_speech.tensorspeech import inference 
 import time
 from playsound import playsound
 from urllib.request import urlopen, URLError
@@ -11,7 +13,7 @@ from io import BytesIO
 from pydub import AudioSegment
 from pydub.playback import play
 import socket
-
+import os
 
 def speed_change(sound, speed=1.0):
     # Manually override the frame_rate. This tells the computer how many
@@ -32,8 +34,9 @@ def say(text):
     #multiprocessing.Process(target=say_process, args=[text]).start()
 
 def say_ai(text):
-    ai.inference(text)
+    inference(text)
     playsound("temp/audio_after.wav")
+    os.remove("temp/audio_after.wav")
 
 def say_process(text):
     

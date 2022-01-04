@@ -2,7 +2,7 @@ import threading
 import speech_recognition as sr
 import data_handling.database as database
 import processing.Direct_Logic.gettingtime as gettingtime
-from output.text_to_speech.say import say
+from outputs.text_to_speech.say import say
 
 
 def getvoice():

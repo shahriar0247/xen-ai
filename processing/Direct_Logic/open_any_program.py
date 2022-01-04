@@ -2,8 +2,8 @@ import os
 import sqlite3
 import getpass
 import subprocess
-import output.text_to_speech.say as say
-import input.getvoice as getvoice
+from inputs.speech_to_text.getvoice import getvoice
+import outputs.text_to_speech.say as say
 import inflect
 
 ALL_PROGRAM = []

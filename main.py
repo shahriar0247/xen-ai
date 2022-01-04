@@ -1,8 +1,8 @@
-from output.debug.debug import debug
+from inputs.speech_to_text.getvoice import listen
+from inputs.speech_to_text.live_transcription import background_listen_2
+from outputs.debug.debug import debug
 import time
 from processing.Direct_Logic.action import do
-from input.getvoice import listen
-from input.live_transcription import background_listen_2
 from speech_recognition import UnknownValueError
 import threading
 

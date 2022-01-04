@@ -1,4 +1,4 @@
-import output.text_to_speech.say as say
+import outputs.text_to_speech.say as say
 import processing.Direct_Logic.gettingtime as gettingtime
 # from charlie import charlie3
 
