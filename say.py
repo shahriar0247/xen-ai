@@ -3,21 +3,15 @@ import pythoncom
 import time
 from pywintypes import com_error
 from gtts import gTTS 
-import os 
 import time
 from playsound import playsound
 from urllib.request import urlopen, URLError
-import multiprocessing
-import shutil
-import threading
 import pyttsx3
-import subprocess
-import soundfile as sf
-import pyrubberband as pyrb
-import sys
+from io import BytesIO
 from pydub import AudioSegment
 from pydub.playback import play
-import subprocess
+import socket
+
 
 def speed_change(sound, speed=1.0):
     # Manually override the frame_rate. This tells the computer how many
@@ -33,32 +27,33 @@ def speed_change(sound, speed=1.0):
 
 
 def say(text):
-    
     print(text)
     say_process(text)
     #multiprocessing.Process(target=say_process, args=[text]).start()
         
 def say_process(text):
+    
+
     if internet_on():
-        
         say_online(text)
     else:
         say_offline(text)
 
 def say_online(text):
-    
     gtts_object = gTTS(text=text)
-    set_temp_dir()
-    filename = "temp/output2.mp3"
     
-    gtts_object.save(filename)
-    lol = subprocess.Popen("ffmpeg -i "+filename+" "+filename+".wav", shell=True, stdout=subprocess.PIPE)
-    filename = filename + ".wav"
+
+    mp3_fp = BytesIO()
+    print(time.perf_counter())
+    gtts_object.write_to_fp(mp3_fp)    
+    print(time.perf_counter())
+    mp3_fp.seek(0)
+    song = AudioSegment.from_file(mp3_fp, format="mp3")
     
-    sped_up_sound = AudioSegment.from_file(filename).speedup(1.5, 150, 25)
+    play(song)    
     
-    play(sped_up_sound)
-    
+
+
 
 
 
@@ -76,36 +71,13 @@ def say_offline2(text):
     engine.say(text)
     engine.runAndWait()
 
-def set_temp_dir():
-    try:
-        if os.path.isdir("temp"):
-            shutil.rmtree('temp')
-            os.mkdir("temp")
-            return True
-        else:
-            os.mkdir("temp")
-            return True
-        return False
-    except Exception as e:
-        
-        return False
-
-def change_speed(filename):
-    y, sr = sf.read(filename)
-    filename = filename + "3"
-    # Play back at 1.5X speed
-    y_stretch = pyrb.time_stretch(y, sr, 1.5)
-    # Play back two 1.5x tones
-    y_shift = pyrb.pitch_shift(y, sr, 1.5)
-    sf.write(filename, y_stretch, sr, format='wav')
-    return filename
 
 def internet_on():
     try:
-        urlopen('https://google.com', timeout=1)
+        ip = socket.gethostbyname('www.google.com')
         return True
-    except URLError as err: 
+    except socket.gaierror:
         return False
-
+    
 
 
