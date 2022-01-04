@@ -28,9 +28,13 @@ def speed_change(sound, speed=1.0):
 
 def say(text):
     print(text)
-    say_process(text)
+    say_ai(text)
     #multiprocessing.Process(target=say_process, args=[text]).start()
-        
+
+def say_ai(text):
+    ai.inference(text)
+    playsound("temp/audio_after.wav")
+
 def say_process(text):
     
 
