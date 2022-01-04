@@ -33,7 +33,7 @@ def inference(text):
   # melgan inference
   audio_before = mb_melgan.inference(mel_before)[0, :, 0]
   audio_after = mb_melgan.inference(mel_after)[0, :, 0]
-  
+  print(type(audio_after))
   # save to file
 
   sf.write('./temp/audio_before.wav', audio_before, 22050, "PCM_16")

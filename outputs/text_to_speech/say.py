@@ -34,7 +34,10 @@ def say(text):
     #multiprocessing.Process(target=say_process, args=[text]).start()
 
 def say_ai(text):
+    start = (time.perf_counter())
     inference(text)
+    end = (time.perf_counter())
+    print(end-start)
     playsound("temp/audio_after.wav")
     os.remove("temp/audio_after.wav")
 
