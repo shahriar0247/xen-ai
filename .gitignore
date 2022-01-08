@@ -5,3 +5,4 @@ haystack
 *.scorer
 *.pbmm
 temp
+venv

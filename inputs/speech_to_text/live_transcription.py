@@ -9,10 +9,13 @@ import webrtcvad
 from halo import Halo
 from scipy import signal
 import speech_recognition as sr
+from data_handling.database import save
+from outputs.debug.debug import debug
 
-from processing.Direct_Logic.action import do
+from processing.functions.action import do
 
 logging.basicConfig(level=20)
+
 
 class Audio(object):
     """Streams raw audio from microphone. Data is received in a separate thread, and stored in a buffer, to be read from."""
@@ -23,20 +26,29 @@ class Audio(object):
     CHANNELS = 1
     BLOCKS_PER_SECOND = 50
 
-    def __init__(self, callback=None, device=None, input_rate=RATE_PROCESS, file=None):
+    def __init__(self,
+                 callback=None,
+                 device=None,
+                 input_rate=RATE_PROCESS,
+                 file=None):
+
         def proxy_callback(in_data, frame_count, time_info, status):
             #pylint: disable=unused-argument
             if self.chunk is not None:
                 in_data = self.wf.readframes(self.chunk)
             callback(in_data)
             return (None, pyaudio.paContinue)
-        if callback is None: callback = lambda in_data: self.buffer_queue.put(in_data)
+
+        if callback is None:
+            callback = lambda in_data: self.buffer_queue.put(in_data)
         self.buffer_queue = queue.Queue()
         self.device = device
         self.input_rate = input_rate
         self.sample_rate = self.RATE_PROCESS
-        self.block_size = int(self.RATE_PROCESS / float(self.BLOCKS_PER_SECOND))
-        self.block_size_input = int(self.input_rate / float(self.BLOCKS_PER_SECOND))
+        self.block_size = int(self.RATE_PROCESS /
+                              float(self.BLOCKS_PER_SECOND))
+        self.block_size_input = int(self.input_rate /
+                                    float(self.BLOCKS_PER_SECOND))
         self.pa = pyaudio.PyAudio()
 
         kwargs = {
@@ -89,7 +101,8 @@ class Audio(object):
         self.stream.close()
         self.pa.terminate()
 
-    frame_duration_ms = property(lambda self: 1000 * self.block_size // self.sample_rate)
+    frame_duration_ms = property(
+        lambda self: 1000 * self.block_size // self.sample_rate)
 
     def write_wav(self, filename, data):
         logging.info("write wav %s", filename)
@@ -106,7 +119,11 @@ class Audio(object):
 class VADAudio(Audio):
     """Filter & segment audio with voice activity detection."""
 
-    def __init__(self, aggressiveness=3, device=None, input_rate=None, file=None):
+    def __init__(self,
+                 aggressiveness=3,
+                 device=None,
+                 input_rate=None,
+                 file=None):
         super().__init__(device=device, input_rate=input_rate, file=file)
         self.vad = webrtcvad.Vad(aggressiveness)
 
@@ -148,19 +165,22 @@ class VADAudio(Audio):
             else:
                 yield frame
                 ring_buffer.append((frame, is_speech))
-                num_unvoiced = len([f for f, speech in ring_buffer if not speech])
+                num_unvoiced = len(
+                    [f for f, speech in ring_buffer if not speech])
                 if num_unvoiced > ratio * ring_buffer.maxlen:
                     triggered = False
                     yield None
                     ring_buffer.clear()
 
+
 def background_listen_2():
 
     # Start audio with VAD
     vad_audio = VADAudio(
-                         device=None,
-                         input_rate=32000,)
-    
+        device=None,
+        input_rate=32000,
+    )
+
     frames = vad_audio.vad_collector()
     spinner = None
     wav_data = bytearray()
@@ -168,26 +188,31 @@ def background_listen_2():
         if frame is not None:
             if "temp": wav_data.extend(frame)
         else:
-            
+
             if spinner: spinner.stop()
-            filename = os.path.join("temp", datetime.now().strftime("savewav_%Y-%m-%d_%H-%M-%S_%f.wav"))
+            filename = os.path.join(
+                "temp",
+                datetime.now().strftime("savewav_%Y-%m-%d_%H-%M-%S_%f.wav"))
             vad_audio.write_wav(filename, wav_data)
             threading.Thread(target=audio_to_text, args=[filename]).start()
             wav_data = bytearray()
+
 
 r = sr.Recognizer()
 with sr.Microphone() as source:
     r.adjust_for_ambient_noise(source)
 
+
 def audio_to_text(filename):
-    
+
     try:
-            with sr.AudioFile(filename) as source:
-                # listen for the data (load audio to memory)
-                audio_data = r.record(source)
-                # recognize (convert from speech to text)
-                text = r.recognize_google(audio_data)
-                do(text)
+        with sr.AudioFile(filename) as source:
+            # listen for the data (load audio to memory)
+            audio_data = r.record(source)
+            # recognize (convert from speech to text)
+            text = r.recognize_google(audio_data)
+            save(text)
+            do(text)
+            debug(text, "said")
     except sr.UnknownValueError:
         pass
-
