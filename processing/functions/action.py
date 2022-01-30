@@ -11,6 +11,7 @@ from processing.functions.keyboard_shortcuts import alt_keywords
 hotkey_hotword = alt_keywords
 hotkey_hotword.append("control")
 hotkey_hotword.append("shift")
+hotkey_hotword.append("windows key")
 
 
 def do(said):

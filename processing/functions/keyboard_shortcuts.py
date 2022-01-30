@@ -12,11 +12,18 @@ def shortcut(said):
     shift = False
     alt = False
     tab = False
+    win_key = False
 
     if "control" in said:
         control = True
         said = said.replace("control ", "")
         keyboard.press(Key.ctrl)
+    if "windows key" in said:
+        win_key = True
+   
+        said = said.replace("windows key ", "")
+        print(said)
+        keyboard.press(Key.cmd)
 
     if "shift" in said:
         said = said.replace("shift ", "")
@@ -36,7 +43,6 @@ def shortcut(said):
         keyboard.press(Key.tab)
 
     if said[0] == "f":
-        print(said)
         keys = [
             Key.f1, Key.f2, Key.f3, Key.f4, Key.f5, Key.f6, Key.f7, Key.f8,
             Key.f9, Key.f10, Key.f11, Key.f12
@@ -52,3 +58,4 @@ def shortcut(said):
     keyboard.release(Key.shift)
     keyboard.release(Key.alt)
     keyboard.release(Key.tab)
+    keyboard.release(Key.cmd)
