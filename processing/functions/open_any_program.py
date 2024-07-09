@@ -4,12 +4,10 @@ import getpass
 import subprocess
 from inputs.speech_to_text.getvoice import getvoice
 import outputs.text_to_speech.say as say
-import inflect
 
 ALL_PROGRAM = []
 conn = None
 cursor = None
-p = inflect.engine()
 
 
 def create_db():

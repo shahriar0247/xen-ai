@@ -1,0 +1,15 @@
+pyttsx3
+wheel
+pywin32
+SpeechRecognition
+pyaudio
+webrtcvad
+halo
+numpy
+scipy
+gradio 
+SoundFile
+tensorflow
+transformers
+pynput
+torch

@@ -2,8 +2,6 @@ import win32com.client as wincl
 import pythoncom
 import time
 from pywintypes import com_error
-from gtts import gTTS
-
 from outputs.text_to_speech.tensorspeech import inference 
 import time
 from playsound import playsound
@@ -35,11 +33,11 @@ def say(text):
 
 def say_ai(text):
     start = (time.perf_counter())
-    inference(text)
+    output_path = inference(text)
     end = (time.perf_counter())
     print(end-start)
-    playsound("temp/audio_after.wav")
-    os.remove("temp/audio_after.wav")
+    playsound(output_path)
+    os.remove(output_path)
 
 def say_process(text):
     
